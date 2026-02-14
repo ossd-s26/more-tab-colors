@@ -1,0 +1,6 @@
+<html>
+  <body>
+    <button id="redBtn">Make Tabs Red</button>
+    <script src="popup.js"></script>
+  </body>
+</html>
