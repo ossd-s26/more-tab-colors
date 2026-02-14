@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "More Tab Colors",
+  "version": "1.0",
+  "description": "Change the color of your active tab using tab groups",
+  
+  "permissions": [
+    "tabs",
+    "tabGroups"
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Change tab color"
+  }
+}
