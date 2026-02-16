@@ -23,6 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.storage.local.set({ savedColor: chosenColor });
     applyTheme(chosenColor);
   });
+
+  //reset button - restore default (no custom theme)
+  const resetBtn = document.getElementById('resetBtn');
+  resetBtn.addEventListener('click', () => {
+    browser.theme.reset();
+    browser.storage.local.remove('savedColor');
+    colorPicker.color.set('#ffffff');
+  });
 });
 
 function applyTheme(color) {
