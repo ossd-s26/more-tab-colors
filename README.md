@@ -3,10 +3,7 @@ More Tab Colors is a Firefox extension that allows you to change the color of th
 
 <!-- order/structure is open to change -->
 ## How to Use
-Install the extension (see Installation below)
-Click the More Tab Colors extension icon in the Firefox toolbar
-The web tab color theme will change instantly
-Click again to switch or toggle colors
+After installation is complete, click the More Tab Colors extension icon in the Firefox toolbar. Then, choose your desired color using the color wheel. Click on Apply & Save in order to apply the color to the tabs and window. Click on Reset whenever to revert back to default colors.
 
 ## Installation
 
