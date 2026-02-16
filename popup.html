@@ -1,66 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tab Color Changer</title>
-  <style>
-    body {
-      width: 200px;
-      padding: 15px;
-      font-family: Arial, sans-serif;
-      margin: 0;
-    }
-    
-    h3 {
-      margin-top: 0;
-      text-align: center;
-      color: #333;
-    }
-    
-    .color-btn {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      transition: opacity 0.2s;
-    }
-    
-    .color-btn:hover {
-      opacity: 0.8;
-    }
-    
-    #reset-btn {
-      background-color: #666;
-      margin-top: 10px;
-    }
-    
-    #reset-all-btn {
-      background-color: #d32f2f;
-      margin-top: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h3>Choose a Color</h3>
-  
-  <button class="color-btn" data-color="blue" style="background-color: #1e90ff;">Blue</button>
-  <button class="color-btn" data-color="red" style="background-color: #ff4444;">Red</button>
-  <button class="color-btn" data-color="yellow" style="background-color: #ffd700;">Yellow</button>
-  <button class="color-btn" data-color="green" style="background-color: #32cd32;">Green</button>
-  <button class="color-btn" data-color="pink" style="background-color: #ff69b4;">Pink</button>
-  <button class="color-btn" data-color="purple" style="background-color: #9370db;">Purple</button>
-  <button class="color-btn" data-color="cyan" style="background-color: #00ced1;">Cyan</button>
-  <button class="color-btn" data-color="orange" style="background-color: #ff8c00;">Orange</button>
-  
-  <button class="color-btn" id="reset-btn">Reset Current Tab</button>
-  
-  <button class="color-btn" id="reset-all-btn">Reset All Tabs</button>
-  
-  <script src="popup.js"></script>
+    <h3>Tab Color</h3>
+    <div id="picker"></div>
+    
+    <button id="saveBtn">Apply & Save</button>
+
+    <script src="iro.min.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>
