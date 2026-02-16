@@ -1,97 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+  const saveBtn = document.getElementById('saveBtn');
   
-  const colorButtons = document.querySelectorAll('.color-btn[data-color]');
-  
-  const resetButton = document.getElementById('reset-btn');
-  
-  const resetAllButton = document.getElementById('reset-all-btn');
-  
-  colorButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const color = this.getAttribute('data-color');
-      
-      applyColorToActiveTab(color);
-    });
+  //create the color picker using iro.js
+  const colorPicker = new iro.ColorPicker("#picker", {
+    width: 150,
+    color: "#fff",
+    borderWidth: 1,
+    borderColor: "#ccc",
   });
-  
-  resetButton.addEventListener('click', function() {
-    removeTabFromGroup();
+
+  //get our saved color from storage
+  browser.storage.local.get("savedColor").then((result) => {
+    if (result.savedColor) {
+      colorPicker.color.set(result.savedColor);
+      applyTheme(result.savedColor);
+    }
   });
-  
-  resetAllButton.addEventListener('click', function() {
-    resetAllTabs();
+
+  //apply button functionality
+  saveBtn.addEventListener('click', () => {
+    const chosenColor = colorPicker.color.hexString; 
+    browser.storage.local.set({ savedColor: chosenColor });
+    applyTheme(chosenColor);
   });
-  
 });
 
-/* Apply a color to the currently active tab.*/
-function applyColorToActiveTab(color) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    
-    if (tabs.length === 0) {
-      console.error('No active tab found');
-      return;
-    }
-    
-    const activeTab = tabs[0];
-    const tabId = activeTab.id;
-    
-    if (activeTab.groupId && activeTab.groupId !== -1) { //alr in a group
-      chrome.tabGroups.update(activeTab.groupId, { color: color }, function() {
-        console.log(`Updated group color to ${color}`);
-        window.close();
-      });
-    } else {
-      chrome.tabs.group({ tabIds: tabId }, function(groupId) {
-        chrome.tabGroups.update(groupId, { color: color }, function() {
-          console.log(`Created new group and applied ${color} color`);
-          window.close();
-        });
-      });
-    }
-  });
-}
-
-/* Remove the active tab from its group (reset)*/
-function removeTabFromGroup() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    if (tabs.length === 0) {
-      console.error('No active tab found');
-      return;
-    }
-    
-    const activeTab = tabs[0];
-    const tabId = activeTab.id;
-    
-    if (activeTab.groupId && activeTab.groupId !== -1) {
-      chrome.tabs.ungroup(tabId, function() {
-        console.log('Tab removed from group');
-        window.close();
-      });
-    } else {
-      console.log('Tab is not in a group');
-      window.close();
-    }
-  });
-}
-
-/* Reset all tabs */
-
-function resetAllTabs() {
-  chrome.tabs.query({ currentWindow: true }, function(tabs) {
-    
-    const groupedTabIds = tabs
-      .filter(tab => tab.groupId && tab.groupId !== -1)
-      .map(tab => tab.id);
-    
-    if (groupedTabIds.length > 0) {
-      chrome.tabs.ungroup(groupedTabIds, function() {
-        console.log(`Ungrouped ${groupedTabIds.length} tabs`);
-        window.close();
-      });
-    } else {
-      console.log('No tabs are in groups');
-      window.close();
+function applyTheme(color) {
+  browser.theme.update({
+    colors: {
+      frame: color,
+      tab_background_text: "#000",
+      toolbar: color
     }
   });
 }
