@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
   "name": "More Tab Colors",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Change the color of your tabs",
   "permissions": [
     "theme",
-    "storage"
+    "storage",
+    "tabs"
   ],
+  "background": {
+    "scripts": ["background.js"]
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Change tab color"

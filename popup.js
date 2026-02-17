@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
   const saveBtn = document.getElementById('saveBtn');
+  const resetBtn = document.getElementById('resetBtn');
   
   //create the color picker using iro.js
   const colorPicker = new iro.ColorPicker("#picker", {
@@ -9,28 +10,34 @@ document.addEventListener('DOMContentLoaded', () => {
     borderColor: "#ccc",
   });
 
+  const tabs = await browser.tabs.query({active: true, currentWindow: true});
+  const currentTab = tabs[0];
+  const tabKey = "tab_" + currentTab.id;
+
   //get our saved color from storage
-  browser.storage.local.get("savedColor").then((result) => {
-    if (result.savedColor) {
-      colorPicker.color.set(result.savedColor);
-      applyTheme(result.savedColor);
-    }
-  });
+  const result = await browser.storage.local.get(tabKey);
+  if (result[tabKey]) {
+    colorPicker.color.set(result[tabKey]);
+  }
 
   //apply button functionality
   saveBtn.addEventListener('click', () => {
     const chosenColor = colorPicker.color.hexString; 
-    browser.storage.local.set({ savedColor: chosenColor });
+    
+    browser.storage.local.set({ [tabKey]: chosenColor });
+    
     applyTheme(chosenColor);
   });
 
-  //reset button - restore default (no custom theme)
-  const resetBtn = document.getElementById('resetBtn');
+  //reset button - restore default (no custom theme) 
   resetBtn.addEventListener('click', () => {
+    browser.storage.local.remove(tabKey);
     browser.theme.reset();
-    browser.storage.local.remove('savedColor');
     colorPicker.color.set('#ffffff');
   });
+
+  
+
 });
 
 function applyTheme(color) {
