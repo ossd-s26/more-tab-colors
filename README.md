@@ -1,9 +1,12 @@
 # More Tab Colors
-More Tab Colors is a Firefox extension that allows you to change the color of the main tab area. You can customize the color by sliding on the color picker, giving your browsing a refreshing look.
+More Tab Colors is a Firefox extension that allows you to change the color of the main tab area. You can customize the color by sliding on the color picker, giving your browsing a refreshing look to match its vibe. Or, you can select from other colors you've already picked to group together tabs however you'd like to easily search for related tabs.
 
-<!-- order/structure is open to change -->
 ## How to Use
-After installation is complete, click the More Tab Colors extension icon in the Firefox toolbar. Then, choose your desired color using the color wheel. Click on Apply & Save in order to apply the color to the tabs and window. Click on Reset whenever to revert back to default colors.
+After installation is complete, click the More Tab Colors extension icon in the Firefox toolbar (you can optionally pin it to your toolbar). 
+Then, choose your desired color using the color wheel. 
+Click on Apply & Save in order to apply the color to the tabs and window. 
+If you've already picked a color for another tab, you could also select from recent colors to have it match another tab.
+Click on Reset to revert back to default colors.
 
 ## Installation
 
@@ -18,13 +21,11 @@ After installation is complete, click the More Tab Colors extension icon in the 
 4. Open the cloned directory cd more-tab-colors
 
 ### Steps to Add to Firefox
-1. Open Mozilla Firefox and go to about:debugging
+1. Open Mozilla Firefox and go to about:debugging (type in the search bar or find Tools > Browser Tools > Remote Debugging in the application menu)
 2. Click This Firefox
 3. Click Load Temporary Add-on…
-4. Select the manifest.json file inside the project directory
+4. Select the manifest.json file inside the project directory and open
 The More Tab Colors extension should now appear in your browser next to the search bar (top right)
-
-
 
 
 ## Contributing
