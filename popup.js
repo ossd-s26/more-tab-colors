@@ -19,6 +19,16 @@ document.addEventListener('DOMContentLoaded', async() => {
   const tabKey = "tab_" + currentTab.id;
 
   const recentColors = await getRecentColors(RECENTS_KEY);
+
+  //set picker + apply theme + set favicon in current tab
+  const applyToCurrentTab = async (hex) => {
+    colorPicker.color.set(hex);
+    applyTheme(hex);
+    try {
+      await browser.tabs.sendMessage(currentTab.id, { type: "setColorFavicon", color: hex });
+    } catch (e) {}
+  };
+
   renderRecentColors(recentColorsEl, recentColors, (hex) => {
     // click a swatch => set picker + apply immediately
     colorPicker.color.set(hex);
@@ -37,8 +47,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     
     browser.storage.local.set({ [tabKey]: chosenColor });
     
-    applyTheme(chosenColor);
-
+    await applyToCurrentTab(chosenColor);
 
     const updatedRecents = addToRecents(recentColors, chosenColor, RECENTS_LIMIT);
     await browser.storage.local.set({ [RECENTS_KEY]: updatedRecents });
@@ -53,10 +62,13 @@ document.addEventListener('DOMContentLoaded', async() => {
   });
 
   //reset button - restore default (no custom theme) 
-  resetBtn.addEventListener('click', () => {
+  resetBtn.addEventListener('click', async () => {
     browser.storage.local.remove(tabKey);
     browser.theme.reset();
     colorPicker.color.set('#ffffff');
+    try {
+      await browser.tabs.sendMessage(currentTab.id, { type: "resetColorFavicon" });
+    } catch (e) {}
   });  
 
 });
@@ -80,7 +92,7 @@ async function getRecentColors(RECENTS_KEY) {
 function addToRecents(recentColors, chosenColor, limit) {
   const normalized = (chosenColor || "").toLowerCase();
 
-  // remove existing occurrence (dedupe)
+  // remove existing occurrence
   const without = recentColors.filter(c => (c || "").toLowerCase() !== normalized);
 
   // add to front
